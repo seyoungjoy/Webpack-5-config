@@ -20,6 +20,7 @@
   "homepage": "https://github.com/seyoungjoy/Webpack-5-config#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.6.0",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^2.5.3",

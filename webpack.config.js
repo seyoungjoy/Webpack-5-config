@@ -1,6 +1,6 @@
 const path = require("path");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     mode: "development",
@@ -15,15 +15,7 @@ module.exports = {
         rules:[
             {
                 test:/\.css$/,
-                // use:['style-loader', 'css-loader']
-                use:[
-                    MiniCssExtractPlugin,
-                    {
-                        loader: "css-loader",
-                        options : {}
-                    }
-                ],
-
+                use:['style-loader', 'css-loader']
             },
             {
                 test:/\.png$/,
@@ -40,7 +32,12 @@ module.exports = {
         new CleanWebpackPlugin({
             cleanAfterEveryBuildPatterns:['dist']
         }),
-        new MiniCssExtractPlugin(),
+        new CopyPlugin({
+            patterns:[
+                {from:'./src/css/**/*', to:'./dist/css/'},
+                {from:'./src/img/**/*', to:'./dist/img'}
+            ]
+        })
     ],
     resolve:{
         modules:['node-modules'],
