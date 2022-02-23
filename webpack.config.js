@@ -1,46 +1,50 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const path = require("path");
+const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    mode:"development",
+    mode: "development",
     entry:{
-        main:"./src/app.js"
+        app : "./src/js/app.js"
     },
     output:{
-        path: path.resolve('./dist'),
-        filename:'[name].js',
+        path: path.resolve('./dist/js'),
+        filename:'[name].bundle.js'
     },
     module:{
         rules:[
             {
                 test:/\.css$/,
-                use:['style-loader','css-loader']
+                // use:['style-loader', 'css-loader']
+                use:[
+                    MiniCssExtractPlugin,
+                    {
+                        loader: "css-loader",
+                        options : {}
+                    }
+                ],
+
             },
             {
                 test:/\.png$/,
                 use:[{
                     loader: 'file-loader',
                     options:{
-                        name:'[name].[ext]?[hash]'
+                        name:'[name].[ext]'
                     }
-                }],
+                }]
             }
         ]
-
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template:'./src/index.html'
+        new CleanWebpackPlugin({
+            cleanAfterEveryBuildPatterns:['dist']
         }),
-        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin(),
     ],
-    optimization: {
-
-    },
     resolve:{
-        modules:['node_modules'],
-        extensions:['.js', '.json', '.jsx', '.css']
-    }
+        modules:['node-modules'],
+        extensions: ['.js', '.json', '.jsx', '.css']
 
+    }
 }
