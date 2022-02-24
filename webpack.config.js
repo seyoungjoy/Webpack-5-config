@@ -4,28 +4,18 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     mode: "development",
+    context:path.resolve(__dirname, './site/assets_src'),
     entry:{
-        app : "./src/js/app.js"
+        app : "./js/app.js"
     },
     output:{
-        path: path.resolve('./dist/js'),
-        filename:'[name].bundle.js'
+        path: path.resolve(__dirname,'./site/assets/'),
+        filename:'js/[name].bundle.js',
+        sourceMapFilename: "[name].map",
     },
     module:{
         rules:[
-            {
-                test:/\.css$/,
-                use:['style-loader', 'css-loader']
-            },
-            {
-                test:/\.png$/,
-                use:[{
-                    loader: 'file-loader',
-                    options:{
-                        name:'[name].[ext]'
-                    }
-                }]
-            }
+
         ]
     },
     plugins: [
@@ -34,14 +24,27 @@ module.exports = {
         }),
         new CopyPlugin({
             patterns:[
-                {from:'./src/css/**/*', to:'./dist/css/'},
-                {from:'./src/img/**/*', to:'./dist/img'}
+                {from:"./css/**"},
+                {from:"./img/**/*"},
             ]
         })
     ],
     resolve:{
         modules:['node-modules'],
-        extensions: ['.js', '.json', '.jsx', '.css']
+        extensions: ['.js', '.json', '.jsx', '.css'],
+        fallback:{
+            "events" : false,
+        }
 
-    }
+    },
+    // devServer: {
+    //     host:"localhost",
+    //     static:path.join(__dirname, "/site/assets/"),
+    //     compress:true,
+    //     hot:true,
+    //     inline:true,
+    //     port:9000,
+    //     open:true,
+    // },
+
 }
