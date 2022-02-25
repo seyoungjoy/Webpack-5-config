@@ -15,6 +15,26 @@ module.exports = {
     },
     module:{
         rules:[
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [[
+                            "@babel/env",{
+                                "useBuiltIns" : "entry",
+                                "corejs": 3,
+                                "targets" : {
+                                    "browsers": ["last 3 versions", "ie >= 11"],
+                                    "node": "current"
+                                }
+                            }
+                        ]],
+                        plugins: []
+                    }
+                }
+            }
 
         ]
     },
@@ -31,20 +51,18 @@ module.exports = {
     ],
     resolve:{
         modules:['node-modules'],
-        extensions: ['.js', '.json', '.jsx', '.css'],
+        extensions: [".wasm", ".ts", ".tsx", ".mjs", ".cjs", ".js", ".json"],
         fallback:{
             "events" : false,
         }
 
     },
     // devServer: {
-    //     host:"localhost",
-    //     static:path.join(__dirname, "/site/assets/"),
-    //     compress:true,
-    //     hot:true,
-    //     inline:true,
-    //     port:9000,
-    //     open:true,
+    //     static: {
+    //         directory: path.resolve(__dirname, './site/'),
+    //     },
+    //     compress: true,
+    //     hot : true,
+    //     port: 9000,
     // },
-
 }
