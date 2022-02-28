@@ -25,12 +25,11 @@ module.exports = {
                             [
                                 '@babel/preset-env',
                                 {
-                                    useBuiltIns: 'usage',
+                                    // useBuiltIns: 'usage',
                                     shippedProposals: true,
                                     // modules: false,
                                     corejs: 3
                                 }
-                                // todo: 옵션으로 폴리필만 넣으면 에러가 뜸...
                             ],
                         ]
                     }
