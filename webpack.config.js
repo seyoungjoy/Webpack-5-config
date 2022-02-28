@@ -15,27 +15,28 @@ module.exports = {
     },
     module:{
         rules:[
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
+            { // js babel .config
+                test:/\.js$/,
                 use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [[
-                            "@babel/env",{
-                                "useBuiltIns" : "entry",
-                                "corejs": 3,
-                                "targets" : {
-                                    "browsers": ["last 3 versions", "ie >= 11"],
-                                    "node": "current"
+                    loader:'babel-loader',
+                    options:{
+                        sourceMap: true,
+                        presets:[
+                            [
+                                '@babel/preset-env',
+                                {
+                                    useBuiltIns: 'usage',
+                                    shippedProposals: true,
+                                    // modules: false,
+                                    corejs: 3
                                 }
-                            }
-                        ]],
-                        plugins: []
+                                // todo: 옵션으로 폴리필만 넣으면 에러가 뜸...
+                            ],
+                        ]
                     }
-                }
-            }
-
+                },
+                exclude: /node_modules/,
+            },
         ]
     },
     plugins: [
@@ -47,7 +48,7 @@ module.exports = {
                 {from:"./css/**"},
                 {from:"./img/**/*"},
             ]
-        })
+        }),
     ],
     resolve:{
         modules:['node-modules'],
@@ -57,12 +58,6 @@ module.exports = {
         }
 
     },
-    // devServer: {
-    //     static: {
-    //         directory: path.resolve(__dirname, './site/'),
-    //     },
-    //     compress: true,
-    //     hot : true,
-    //     port: 9000,
-    // },
+    devtool: 'inline-source-map',
+
 }
