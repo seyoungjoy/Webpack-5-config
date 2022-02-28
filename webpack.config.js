@@ -25,7 +25,7 @@ module.exports = {
                             [
                                 '@babel/preset-env',
                                 {
-                                    // useBuiltIns: 'usage',
+                                    useBuiltIns: 'usage',
                                     shippedProposals: true,
                                     // modules: false,
                                     corejs: 3
@@ -50,7 +50,7 @@ module.exports = {
         }),
     ],
     resolve:{
-        modules:['node-modules'],
+        // modules:['node-modules'],
         extensions: [".wasm", ".ts", ".tsx", ".mjs", ".cjs", ".js", ".json"],
         fallback:{
             "events" : false,
